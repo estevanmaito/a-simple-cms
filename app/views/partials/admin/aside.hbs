@@ -1,0 +1,26 @@
+<aside class="main-sidebar">
+
+  <!-- sidebar: style can be found in sidebar.less -->
+  <section class="sidebar">
+
+    <!-- Sidebar Menu -->
+    <ul class="sidebar-menu">
+      <li class="header">PANEL</li>
+      {{#each sideMenu}}
+        {{#if subMenu}}
+        <li class="treeview {{#ifeq ../sectionsTree key}}active{{else}}{{/ifeq}}">
+          <a href="#"><i class="fa fa-newspaper-o"></i><span>{{label}}</span> <i class="fa fa-angle-right pull-right"></i></a>
+          <ul class="treeview-menu">
+            {{#each subMenu}}
+              <li {{#ifeq key ../../sections}}class="active"{{else}}{{/ifeq}}><a href="{{href}}">{{label}}</a></li>
+            {{/each}}
+          </ul>
+        </li>
+        {{else}}
+        <li {{#ifeq ../sections key}}class="active"{{else}}{{/ifeq}}><a href="{{href}}"><i class="fa fa-bar-chart"></i> <span>{{label}}</span></a></li>
+        {{/if}}
+      {{/each}}
+    </ul><!-- /.sidebar-menu -->
+  </section>
+  <!-- /.sidebar -->
+</aside>

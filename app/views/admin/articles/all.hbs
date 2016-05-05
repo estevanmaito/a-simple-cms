@@ -1,0 +1,65 @@
+{{#section 'head'}}
+<!-- DataTables -->
+<link rel="stylesheet" href="/admin/plugins/datatables/dataTables.bootstrap.css">
+{{/section}}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">All Articles</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <table id="articles" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                          <th>Title</th>
+                          <th>Author</th>
+                          <th>Tags</th>
+                          <th>Created Date</th>
+                          <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {{#each articles}}
+                        <tr>
+                          <td>{{title}}</td>
+                          <td>{{author.displayName}}</td>
+                          <td>TODO</td>
+                          <td>{{createdDate}}</td>
+                          <td>{{state}}</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                          <th>Title</th>
+                          <th>Author</th>
+                          <th>Tags</th>
+                          <th>Created Date</th>
+                          <th>Status</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div>
+</div>
+
+{{#section 'scripts'}}
+<!-- DataTables -->
+<script src="/admin/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/admin/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script>
+  $(function () {
+        $('#articles').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': false,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        });
+  });
+</script>
+{{/section}}
