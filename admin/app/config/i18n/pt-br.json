@@ -1,0 +1,33 @@
+{
+    "locale": "pt-br",
+    "dashboard": {
+        "title": "Painel"
+    },
+    "allArticles": {
+        "pageTitle": "Todos artigos",
+        "articlesTable": {
+            "title": "Título",
+            "author": "Autor",
+            "tags": "Etiquetas",
+            "createdDate": "Criado em",
+            "status": "Estado"
+        }
+    },
+    "newArticle": {
+        "pageTitle": "Novo artigo",
+        "articlesForm": {
+            "title": "Título",
+            "content": "Conteúdo",
+            "properties": "Propriedades",
+            "slugSnippet": "como a URL será apresentada (ex: exemplo.com/isso-e-o-slug)",
+            "author": "Autor",
+            "state": {
+                "title": "Estado",
+                "draft": "Rascunho",
+                "published": "Publicado"
+            },
+            "cancelBtn": "Cancelar",
+            "postBtn": "Postar"
+        }
+    }
+}

@@ -8,7 +8,7 @@
         <div class="col-md-8">
             <div class="box box-default">
                 <div class="box-header">
-                    <h3 class="box-title">New Article</h3>
+                    <h3 class="box-title">{{lang.newArticle.pageTitle}}</h3>
                     <!-- tools box -->
                     <div class="pull-right box-tools">
                         <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
@@ -16,12 +16,12 @@
                 </div><!-- /.box-header -->
                 <div class="box-body pad">
                     <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" class="form-control" id="title" placeholder="Enter title" name="title">
+                        <label for="title">{{lang.newArticle.articlesForm.title}}</label>
+                        <input type="text" class="form-control" id="title" name="title">
                     </div>
                     <div class="form-group">
-                        <label for="content">Content</label>
-                        <textarea class="textarea" id="content" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" name="content"></textarea>
+                        <label for="content">{{lang.newArticle.articlesForm.content}}</label>
+                        <textarea class="textarea" id="content" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" name="content"></textarea>
                     </div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
         <div class="col-md-4">
             <div class="box box-default">
                 <div class="box-header">
-                    <h3 class="box-title">Properties</h3>
+                    <h3 class="box-title">{{lang.newArticle.articlesForm.properties}}</h3>
                     <!-- tools box -->
                     <div class="pull-right box-tools">
                         <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
@@ -38,23 +38,24 @@
                 </div><!-- /.box-header -->
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="slug">Slug </label><small> how the URL will show (ex: example.com/this-is-the-slug)</small>
-                        <input type="text" class="form-control" id="slug" placeholder="Enter slug" name="slug">
+                        <label for="slug">Slug </label><small> {{lang.newArticle.articlesForm.slugSnippet}}</small>
+                        <input type="text" class="form-control" id="slug" name="slug">
                     </div>
                     <div class="form-group">
-                        <label for="author">Author</label>
-                        <input type="text" class="form-control" id="author" placeholder="Author name" name="author">
+                        <label for="author">{{lang.newArticle.articlesForm.author}}</label>
+                        <input type="text" name="author" value="{{user.id}}" hidden>
+                        <input type="text" class="form-control" value="{{user.displayName}}" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="state">State</label>
+                        <label for="state">{{lang.newArticle.articlesForm.state.title}}</label>
                         <select class="form-control" id="state" name="state">
-                            <option value="draft" selected>draft</option>
-                            <option value="published">published</option>
+                            <option value="draft" selected>{{lang.newArticle.articlesForm.state.draft}}</option>
+                            <option value="published">{{lang.newArticle.articlesForm.state.published}}</option>
                         </select>
                     </div>
                     <div class="box-footer">
-                        <a href="/admin/articles" class="btn btn-default">Cancel</a>
-                        <button type="submit" class="btn btn-primary pull-right">Post</button>
+                        <a href="/admin/articles" class="btn btn-default">{{lang.newArticle.articlesForm.cancelBtn}}</a>
+                        <button type="submit" class="btn btn-primary pull-right">{{lang.newArticle.articlesForm.postBtn}}</button>
                     </div><!-- /.box-footer -->
                 
                 </div>
@@ -66,10 +67,11 @@
 {{#section 'scripts'}}
 <!-- Bootstrap WYSIHTML5 -->
 <script src="/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<script src="/admin/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.{{lang.locale}}.js"></script>
 <script>
     $(function () {
         //bootstrap WYSIHTML5 - text editor
-        $(".textarea").wysihtml5();
+        $(".textarea").wysihtml5({locale: "{{lang.locale}}"});
     });
 </script>
 {{/section}}

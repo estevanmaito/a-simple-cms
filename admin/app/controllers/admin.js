@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Articles = mongoose.model('Article');
+var Settings = mongoose.model('Settings');
 
 exports.render = function(req, res) {
     res.locals.sections = 'dashboard';
@@ -48,5 +49,20 @@ exports.articlesPostNew = function(req, res) {
         if (err) throw err;
 
         res.redirect('/admin/articles');
+    });
+};
+
+exports.settingsGet = function(req, res) {
+    res.locals.sections = 'settings';
+    res.render('settings');
+};
+
+exports.settingsPost = function(req, res) {
+    var settings = new Settings({lang: req.body.lang});
+
+    settings.save(function(err, result) {
+        if (err) throw err;
+
+        res.redirect('/admin/settings');
     });
 };

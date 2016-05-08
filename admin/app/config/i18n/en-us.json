@@ -1,0 +1,33 @@
+{
+    "locale": "en-us",
+    "dashboard": {
+        "title": "Dashboard"
+    },
+    "allArticles": {
+        "pageTitle": "All articles",
+        "articlesTable": {
+            "title": "Title",
+            "author": "Author",
+            "tags": "Tags",
+            "createdDate": "Created date",
+            "status": "Status"
+        }
+    },
+    "newArticle": {
+        "pageTitle": "New article",
+        "articlesForm": {
+            "title": "Title",
+            "content": "Content",
+            "properties": "Properties",
+            "slugSnippet": "how the URL will show (ex: example.com/this-is-the-slug)",
+            "author": "Author",
+            "state": {
+                "title": "State",
+                "draft": "Draft",
+                "published": "Published"
+            },
+            "cancelBtn": "Cancel",
+            "postBtn": "Post"
+        }
+    }
+}

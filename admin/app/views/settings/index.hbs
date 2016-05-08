@@ -1,0 +1,27 @@
+<div class="row">
+    <form method="post" action="/admin/settings">
+        <div class="col-md-8">
+            <div class="box box-default">
+                <div class="box-header">
+                    <h3 class="box-title">General settings</h3>
+                    <!-- tools box -->
+                    <div class="pull-right box-tools">
+                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                    </div><!-- /. tools -->
+                </div><!-- /.box-header -->
+                <div class="box-body pad">
+                    <div class="form-group">
+                        <label for="lang">Language</label>
+                        <select class="form-control" id="lang" name="lang">
+                            <option value="en-us" selected>en-us</option>
+                            <option value="pt-br">pt-br</option>
+                        </select>
+                    </div>
+                    <div class="box-footer">
+                        <a href="/admin/settings" class="btn btn-default">Cancel</a>
+                        <button type="submit" class="btn btn-primary pull-right">Save</button>
+                    </div><!-- /.box-footer -->
+                </div>
+            </div>
+    </form>
+</div>

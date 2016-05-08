@@ -44,7 +44,7 @@ module.exports = function(app) {
     }));
 
     app.use(cookieParser());
-    app.use(session({ secret: 'dark potato watch metallica' }));
+    app.use(session({ secret: process.env.COOKIE_SECRET }));
     app.use(compress());
     app.use('/admin', express.static('admin/public')); //, {maxAge: 43200000}));
 
