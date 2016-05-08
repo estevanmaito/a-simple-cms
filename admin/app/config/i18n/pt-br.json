@@ -1,5 +1,21 @@
 {
     "locale": "pt-br",
+    "sideMenu": [
+        {"label": "Painel",    "key": "dashboard",   "href": "/admin",         "icon": "fa-bar-chart"},
+        {"label": "Artigos",     "key": "articles",    "icon": "fa-newspaper-o",
+            "subMenu": [
+                {"label": "Todos artigos",     "key": "all-articles",    "href": "/admin/articles"},
+                {"label": "Novo artigo",      "key": "new-article",     "href": "/admin/articles/new"}
+            ]
+        },
+        {"label": "Usuários",        "key": "users",       "icon": "fa-users",
+            "subMenu": [
+                {"label": "Todos usuários",     "key": "all-users",    "href": "/admin/users"},
+                {"label": "Novo usuário",      "key": "new-user",     "href": "/admin/users/new"}
+            ]
+        },
+        {"label": "Configurações",    "key": "settings",     "href": "/admin/settings",    "icon": "fa-cogs"}
+    ],
     "dashboard": {
         "title": "Painel"
     },

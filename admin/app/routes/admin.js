@@ -17,22 +17,22 @@ router.use(function(req, res, next) {
 
 router.use(function(req, res, next) {
     res.locals.user = req.user;
-    res.locals.sideMenu = [
-        {label: 'Dashboard',    key: 'dashboard',   href: '/admin',         icon: 'fa-bar-chart'},
-        {label: 'Articles',     key: 'articles',    icon: 'fa-newspaper-o',
-            subMenu: [
-                {label: 'All articles',     key: 'all-articles',    href: '/admin/articles'},
-                {label: 'New article',      key: 'new-article',     href: '/admin/articles/new'}
-            ]
-        },
-        {label: 'Users',        key: 'users',       icon: 'fa-users',
-            subMenu: [
-                {label: 'All users',     key: 'all-users',    href: '/admin/users'},
-                {label: 'New user',      key: 'new-user',     href: '/admin/users/new'},
-            ]
-        },
-        {label: 'Settings',    key: 'settings',     href: '/admin/settings',    icon: 'fa-cogs'}
-    ];
+    // res.locals.sideMenu = [
+    //     {label: 'Dashboard',    key: 'dashboard',   href: '/admin',         icon: 'fa-bar-chart'},
+    //     {label: 'Articles',     key: 'articles',    icon: 'fa-newspaper-o',
+    //         subMenu: [
+    //             {label: 'All articles',     key: 'all-articles',    href: '/admin/articles'},
+    //             {label: 'New article',      key: 'new-article',     href: '/admin/articles/new'}
+    //         ]
+    //     },
+    //     {label: 'Users',        key: 'users',       icon: 'fa-users',
+    //         subMenu: [
+    //             {label: 'All users',     key: 'all-users',    href: '/admin/users'},
+    //             {label: 'New user',      key: 'new-user',     href: '/admin/users/new'}
+    //         ]
+    //     },
+    //     {label: 'Settings',    key: 'settings',     href: '/admin/settings',    icon: 'fa-cogs'}
+    // ];
 
     function getLangFile(cb) {
         Settings
