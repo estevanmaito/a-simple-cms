@@ -16,9 +16,11 @@
         },
         {"label": "Configurações",    "key": "settings",     "href": "/admin/settings",    "icon": "fa-cogs"}
     ],
+
     "dashboard": {
         "title": "Painel"
     },
+
     "allArticles": {
         "pageTitle": "Todos artigos",
         "articlesTable": {
@@ -45,5 +47,21 @@
             "cancelBtn": "Cancelar",
             "postBtn": "Postar"
         }
+    },
+
+    "allUsers": {
+        "pageTitle": "Todos usuários",
+        "usersTable": {
+            "displayName": "Nome",
+            "username": "Usuário",
+            "last": "Último login",
+            "isAdmin": "Admin"
+        }
+    },
+    "newUser": {
+        "pageTitle": "Novo usuário",
+            "usersForm": {
+                "name": "Nome"
+            }
     }
 }

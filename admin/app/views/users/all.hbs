@@ -1,0 +1,66 @@
+{{#section 'head'}}
+<!-- DataTables -->
+<link rel="stylesheet" href="/admin/plugins/datatables/dataTables.bootstrap.css">
+{{/section}}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">{{lang.allUsers.pageTitle}}</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <table id="articles" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                          <th>{{lang.allUsers.usersTable.displayName}}</th>
+                          <th>{{lang.allUsers.usersTable.username}}</th>
+                          <th>{{lang.allUsers.usersTable.last}}</th>
+                          <th>{{lang.allUsers.usersTable.isAdmin}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {{#each users}}
+                        <tr>
+                          <td>{{displayName}}</td>
+                          <td>{{username}}</td>
+                          <td>{{last}}</td>
+                          <td>{{#if isAdmin}}
+                          <i class="fa fa-check"></i>
+                          {{else}}
+                          <i class="fa fa-times"></i>
+                          {{/if}}</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                          <th>{{lang.allUsers.usersTable.displayName}}</th>
+                          <th>{{lang.allUsers.usersTable.username}}</th>
+                          <th>{{lang.allUsers.usersTable.last}}</th>
+                          <th>{{lang.allUsers.usersTable.isAdmin}}</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div>
+</div>
+
+{{#section 'scripts'}}
+<!-- DataTables -->
+<script src="/admin/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/admin/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script>
+  $(function () {
+        $('#articles').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': false,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        });
+  });
+</script>
+{{/section}}

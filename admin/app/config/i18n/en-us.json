@@ -16,9 +16,11 @@
         },
         {"label": "Settings",    "key": "settings",     "href": "/admin/settings",    "icon": "fa-cogs"}
     ],
+
     "dashboard": {
         "title": "Dashboard"
     },
+
     "allArticles": {
         "pageTitle": "All articles",
         "articlesTable": {
@@ -45,5 +47,21 @@
             "cancelBtn": "Cancel",
             "postBtn": "Post"
         }
+    },
+
+    "allUsers": {
+        "pageTitle": "All users",
+        "usersTable": {
+            "displayName": "Name",
+            "username": "Username",
+            "last": "Last login",
+            "isAdmin": "Admin"
+        }
+    },
+    "newUser": {
+        "pageTitle": "New user",
+            "usersForm": {
+                "name": "Name"
+            }
     }
 }

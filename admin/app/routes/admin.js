@@ -42,6 +42,8 @@ router.use(function(req, res, next) {
 
                 if (settings) {
                     cb(settings.lang);
+                } else {
+                    cb('en-us');
                 }
             });
     }
@@ -58,6 +60,10 @@ router.get('/', admin.render);
 router.get('/articles', admin.articlesList);
 router.get('/articles/new', admin.articlesGetNew);
 router.post('/articles/new', admin.articlesPostNew);
+
+router.get('/users', admin.usersList);
+router.get('/users/new', admin.usersGetNew);
+router.post('/users/new', admin.usersPostNew);
 
 router.get('/settings', admin.settingsGet);
 router.post('/settings', admin.settingsPost);
