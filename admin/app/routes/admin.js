@@ -69,6 +69,8 @@ router.post('/gallery', admin.galleryPost);
 router.get('/users', admin.usersList);
 router.get('/users/new', admin.usersGetNew);
 router.post('/users/new', admin.usersPostNew);
+router.get('/users/profile', admin.usersGetProfile);
+router.post('/users/profile', admin.usersPostProfile);
 
 router.get('/settings', admin.settingsGet);
 router.post('/settings', admin.settingsPost);

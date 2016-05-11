@@ -1,0 +1,67 @@
+{{#section 'head'}}
+{{/section}}
+
+<div class="row">
+    <form method="post" action="/admin/users/profile" enctype="multipart/form-data">
+        <div class="col-md-8">
+            <div class="box box-default">
+                <div class="box-header">
+                    <h3 class="box-title">{{lang.userProfile.pageTitle}}</h3>
+                    <!-- tools box -->
+                    <div class="pull-right box-tools">
+                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                    </div><!-- /. tools -->
+                </div><!-- /.box-header -->
+                <div class="box-body pad">
+                    <p>{{lang.userProfile.profileForm.publicInfos}}</p>
+                    <div class="form-group">
+                        <label for="displayName">{{lang.userProfile.profileForm.displayName}}</label>
+                        <input type="text" class="form-control" id="displayName" name="displayName" value="{{currentUser.displayName}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="image">{{lang.userProfile.profileForm.image}}
+                            <div>
+                                <img src="{{currentUser.image}}" width="250" height="250">
+                            </div>
+                        </label>
+                        <input type="file" class="form-control hidden" " id="image" name="image" hidden>
+                    </div>
+                    <div class="form-group">
+                        <label for="about">{{lang.userProfile.profileForm.about}}</label>
+                        <textarea class="form-control" id="about" name="about" rows="3">{{currentUser.about}}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="box box-default">
+                <div class="box-header">
+                    <h3 class="box-title">{{lang.userProfile.profileForm.security}}</h3>
+                    <!-- tools box -->
+                    <div class="pull-right box-tools">
+                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                    </div><!-- /. tools -->
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="username">{{lang.userProfile.profileForm.username}}</label>
+                        <input type="text" class="form-control" id="username" name="username" value="{{currentUser.username}}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">{{lang.userProfile.profileForm.newPassword}}</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                    <div class="box-footer">
+                        <a href="/admin/users" class="btn btn-default">{{lang.userProfile.profileForm.cancelBtn}}</a>
+                        <button type="submit" id="sendBtn" class="btn btn-primary pull-right">{{lang.userProfile.profileForm.saveBtn}}</button>
+                    </div><!-- /.box-footer -->
+                
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{{#section 'scripts'}}
+{{/section}}

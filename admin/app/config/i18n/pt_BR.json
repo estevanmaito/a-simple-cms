@@ -11,7 +11,8 @@
         {"label": "Usuários",        "key": "users",       "icon": "fa-users",
             "subMenu": [
                 {"label": "Todos usuários",     "key": "all-users",    "href": "/admin/users"},
-                {"label": "Novo usuário",      "key": "new-user",     "href": "/admin/users/new"}
+                {"label": "Novo usuário",       "key": "new-user",     "href": "/admin/users/new"},
+                {"label": "Meu perfil",         "key": "user-profile", "href": "/admin/users/profile"}
             ]
         },
         {"label": "Configurações",    "key": "settings",     "href": "/admin/settings",    "icon": "fa-cogs"}
@@ -49,13 +50,7 @@
             },
             "tags": "Etiquetas",
             "cancelBtn": "Cancelar",
-            "postBtn": "Postar",
-            "gallery": {
-                "title": "Galeria",
-                "sendFilesTab": "Enviar arquivos",
-                "libraryTab": "Biblioteca",
-                "postBtn": "Enviar"
-            }
+            "postBtn": "Postar"
         }
     },
 
@@ -73,5 +68,20 @@
             "usersForm": {
                 "name": "Nome"
             }
+    },
+
+    "userProfile": {
+        "pageTitle": "Meu perfil",
+        "profileForm": {
+            "security": "Segurança",
+            "username": "Usuário",
+            "newPassword": "Nova senha",
+            "publicInfos": "As seguintes informações são públicas e estarão disponíveis aos visitantes",
+            "displayName": "Nome público",
+            "image": "Imagem do perfil",
+            "about": "Sobre",
+            "cancelBtn": "Cancelar",
+            "saveBtn": "Salvar"
+        }
     }
 }

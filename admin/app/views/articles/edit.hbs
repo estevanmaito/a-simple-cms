@@ -4,9 +4,9 @@
 <div class="row">
     {{!-- input pluged in TinyMCE, responsible for updating images --}}
     {{!-- without living the editor --}}
-    <input name="image" type="file" id="filePicker" hidden>
+    <input name="image" type="file" id="filePicker" hidden class="hidden">
     {{!-- stores the field inside the iframe --}}
-    <input type="text" id="filePickerField" hidden>
+    <input type="text" id="filePickerField" hidden class="hidden">
 
     <form method="post" action="/admin/articles/edit">
         <div class="col-md-8">

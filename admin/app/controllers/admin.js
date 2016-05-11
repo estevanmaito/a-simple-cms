@@ -1,6 +1,5 @@
 var Formidable = require('formidable');
 var mongoose = require('mongoose');
-var ObjectId = mongoose.Types.ObjectId;
 var Articles = mongoose.model('Article');
 var Settings = mongoose.model('Settings');
 var Users = mongoose.model('User');
@@ -9,10 +8,19 @@ var Gallery = mongoose.model('Gallery');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 
+
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+DASHBOARD
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
 exports.render = function(req, res) {
     res.locals.sections = 'dashboard';
     res.render('index');
 };
+
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ARTICLES
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
 
 exports.articlesList = function(req, res) {
     // side menu variables
@@ -100,6 +108,10 @@ exports.articlesPostEdit = function(req, res) {
                 });
 };
 
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+GALLERY
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
 exports.galleryGet = function(req, res) {
     Gallery
         .find({})
@@ -157,6 +169,10 @@ exports.galleryPost = function(req, res) {
     });
 };
 
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+USERS
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
 exports.usersList = function(req, res) {
 
     // side menu variables
@@ -213,6 +229,81 @@ exports.usersPostNew = function(req, res) {
     //     res.redirect('/admin/users');
     // });
 };
+
+exports.usersGetProfile = function(req, res) {
+    res.locals.sections = 'user-profile';
+    res.locals.sectionsTree = 'users';
+
+    Users
+        .findOne({_id: req.user.id})
+        .exec(function(err, user) {
+
+            res.render('users/profile', {
+                currentUser: user
+            });
+        });
+};
+
+exports.usersPostProfile = function(req, res) {
+
+    Users
+        .findByUsername(req.user.username, function(err, user) {
+            if (err) throw err;
+
+            var form = new Formidable.IncomingForm();
+
+            form.parse(req, function(err, fields, files) {
+                if (err) throw err;
+
+                if (files.image.size) {
+                    var photo = files.file || files.image;
+                    var dir =  __dirname + '/../../../uploads/';
+                    var uniqueName = Date.now() + photo.name;
+                    var path = dir + uniqueName;
+
+                    mkdirp(dir, function(err) {
+                        if (err) throw err;
+
+                        var src = fs.createReadStream(photo.path);
+                        var dest = fs.createWriteStream(path);
+                        
+                        src.pipe(dest);
+
+                        src.on('end', function() {
+                            fs.unlinkSync(photo.path);
+                        });
+                    });
+
+                    user.image = '/admin/uploads/' + uniqueName;
+                }
+
+                user.displayName = fields.displayName;
+                user.about = fields.about;
+
+                // user changed password
+                if (fields.password) {
+                    user.setPassword(fields.password, function(err, user) {
+                        if (err) throw err;
+
+                        user.save(function(err) {
+                            if (err) throw err;
+                        });
+                    });
+                }
+
+                user.save(function(err) {
+                    if (err) throw err;
+
+                    res.redirect('/admin/users');
+                });
+            });
+            
+        });
+};
+
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+SETTINGS
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
 
 exports.settingsGet = function(req, res) {
     res.locals.sections = 'settings';

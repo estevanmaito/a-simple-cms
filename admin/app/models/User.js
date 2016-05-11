@@ -4,7 +4,9 @@ var passportLocalMongoose = require('passport-local-mongoose');
 
 var User = new Schema({
     displayName: String,
-    isAdmin: {type: Boolean, default: false}
+    isAdmin: {type: Boolean, default: false},
+    about: String,
+    image: String
 });
 
 var options = {
