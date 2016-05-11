@@ -1,5 +1,5 @@
 {
-    "locale": "en-us",
+    "locale": "en_US",
     "sideMenu": [
         {"label": "Dashboard",    "key": "dashboard",   "href": "/admin",         "icon": "fa-bar-chart"},
         {"label": "Articles",     "key": "articles",    "icon": "fa-newspaper-o",
@@ -36,6 +36,7 @@
         "articlesForm": {
             "title": "Title",
             "content": "Content",
+            "insertImage": "Insert image",
             "properties": "Properties",
             "slugSnippet": "how the URL will show (ex: example.com/this-is-the-slug)",
             "author": "Author",

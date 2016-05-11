@@ -43,13 +43,13 @@ router.use(function(req, res, next) {
                 if (settings) {
                     cb(settings.lang);
                 } else {
-                    cb('en-us');
+                    cb('en_US');
                 }
             });
     }
 
     // loads synchronously the i18n data and moves on
-    // it doesn't look good for me, but works :/
+    // it doesn't look good for me, but works for now :/
     getLangFile(function(data) {
         res.locals.lang = JSON.parse(fs.readFileSync(path.join(__dirname + '/../config/i18n/') + data + '.json'));
         next();
@@ -60,6 +60,11 @@ router.get('/', admin.render);
 router.get('/articles', admin.articlesList);
 router.get('/articles/new', admin.articlesGetNew);
 router.post('/articles/new', admin.articlesPostNew);
+router.post('/articles/edit', admin.articlesPostEdit);
+router.get('/articles/:id', admin.articlesGetEdit);
+
+router.get('/gallery', admin.galleryGet);
+router.post('/gallery', admin.galleryPost);
 
 router.get('/users', admin.usersList);
 router.get('/users/new', admin.usersGetNew);

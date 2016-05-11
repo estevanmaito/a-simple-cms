@@ -1,0 +1,138 @@
+{{#section 'head'}}
+{{/section}}
+
+<div class="row">
+    {{!-- input pluged in TinyMCE, responsible for updating images --}}
+    {{!-- without living the editor --}}
+    <input name="image" type="file" id="filePicker" hidden>
+    {{!-- stores the field inside the iframe --}}
+    <input type="text" id="filePickerField" hidden>
+
+    <form method="post" action="/admin/articles/edit">
+        <div class="col-md-8">
+            <div class="box box-default">
+                <div class="box-header">
+                    <h3 class="box-title">{{lang.newArticle.pageTitle}}</h3>
+                    <!-- tools box -->
+                    <div class="pull-right box-tools">
+                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                    </div><!-- /. tools -->
+                </div><!-- /.box-header -->
+                <div class="box-body pad">
+                    <input type="text" id="id" name="id" value="{{article.id}}" hidden>
+                    <div class="form-group">
+                        <label for="title">{{lang.newArticle.articlesForm.title}}</label>
+                        <input type="text" class="form-control" id="title" name="title" value="{{article.title}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="content">{{lang.newArticle.articlesForm.content}}</label>
+                        <textarea id="content" name="content">{{article.content}}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="box box-default">
+                <div class="box-header">
+                    <h3 class="box-title">{{lang.newArticle.articlesForm.properties}}</h3>
+                    <!-- tools box -->
+                    <div class="pull-right box-tools">
+                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                    </div><!-- /. tools -->
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="slug">Slug </label><small> {{lang.newArticle.articlesForm.slugSnippet}}</small>
+                        <input type="text" class="form-control" id="slug" name="slug" value="{{article.slug}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="author">{{lang.newArticle.articlesForm.author}}</label>
+                        <input type="text" name="author" value="{{article.author.id}}" hidden>
+                        <input type="text" class="form-control" value="{{article.author.displayName}}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">{{lang.newArticle.articlesForm.state.title}}</label>
+                        <select class="form-control" id="state" name="state">
+                            <option value="draft" {{#ifeq article.state "draft"}}
+                            selected
+                            {{else}}{{/ifeq}}>{{lang.newArticle.articlesForm.state.draft}}</option>
+                            <option value="published"{{#ifeq article.state "published"}}
+                            selected
+                            {{else}}{{/ifeq}}>{{lang.newArticle.articlesForm.state.published}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tags">{{lang.newArticle.articlesForm.tags}}</label>
+                        <input type="text" class="form-control" id="tags" name="tags" value="{{article.tags}}">
+                    </div>
+                    <div class="box-footer">
+                        <a href="/admin/articles" class="btn btn-default">{{lang.newArticle.articlesForm.cancelBtn}}</a>
+                        <button type="submit" id="sendBtn" class="btn btn-primary pull-right">{{lang.newArticle.articlesForm.postBtn}}</button>
+                    </div><!-- /.box-footer -->
+                
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{{#section 'scripts'}}
+<script src="/admin/js/slug-browser.js"></script>
+<script src='/admin/plugins/tinymce/tinymce.min.js'></script>
+<script>
+    tinymce.init({
+        selector: '#content',
+        statusbar: false, // it doesn't matter the name of the elements I'm in
+        menubar: false, // the same options that are already in the toolbar
+        plugins: 'image imagetools',
+        height: 400,
+        language: '{{lang.locale}}',
+        images_upload_url: '/admin/gallery',
+        images_upload_base_path: '/admin/',
+        file_browser_callback: function(field_name, url, type, win) {
+            if (type === 'image') {
+                // the simulated click opens the system's file browser
+                $('#filePicker').click();
+                // sets the actual field_name to the hidden input
+                document.getElementById('filePickerField').value = field_name;
+            }
+        }
+    });
+
+    $(document).ready(function() {
+        $('#sendBtn').click(function(e) {
+            e.preventDefault();
+            // before sending the form, make shure that all images have already
+            // been saved
+            tinymce.activeEditor.uploadImages(function(success) {
+
+                document.forms[0].submit();
+            });
+        });
+
+        // when user picks a file
+        $('#filePicker').change(function(e) {
+            // create a new form
+            var form = new FormData();
+            // add the image
+            form.append('image', document.getElementById('filePicker').files[0]);
+
+            // post
+            $.ajax({
+                url: '/admin/gallery',
+                method: 'post',
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    // get the value from the hidden input and update the real field
+                    document.getElementById(document.getElementById('filePickerField').value).value = data.location;
+                }
+            });
+        });
+
+    });
+  </script>
+
+{{/section}}

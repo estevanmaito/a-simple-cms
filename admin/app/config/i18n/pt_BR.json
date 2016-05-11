@@ -1,5 +1,5 @@
 {
-    "locale": "pt-br",
+    "locale": "pt_BR",
     "sideMenu": [
         {"label": "Painel",    "key": "dashboard",   "href": "/admin",         "icon": "fa-bar-chart"},
         {"label": "Artigos",     "key": "articles",    "icon": "fa-newspaper-o",
@@ -18,7 +18,9 @@
     ],
 
     "dashboard": {
-        "title": "Painel"
+        "title": "Painel",
+        "comments": "Comentários",
+        "visits": "Visitas"
     },
 
     "allArticles": {
@@ -36,6 +38,7 @@
         "articlesForm": {
             "title": "Título",
             "content": "Conteúdo",
+            "insertImage": "Inserir imagem",
             "properties": "Propriedades",
             "slugSnippet": "como a URL será apresentada (ex: exemplo.com/isso-e-o-slug)",
             "author": "Autor",
@@ -44,8 +47,15 @@
                 "draft": "Rascunho",
                 "published": "Publicado"
             },
+            "tags": "Etiquetas",
             "cancelBtn": "Cancelar",
-            "postBtn": "Postar"
+            "postBtn": "Postar",
+            "gallery": {
+                "title": "Galeria",
+                "sendFilesTab": "Enviar arquivos",
+                "libraryTab": "Biblioteca",
+                "postBtn": "Enviar"
+            }
         }
     },
 

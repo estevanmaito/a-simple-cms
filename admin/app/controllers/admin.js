@@ -1,7 +1,13 @@
+var Formidable = require('formidable');
 var mongoose = require('mongoose');
+var ObjectId = mongoose.Types.ObjectId;
 var Articles = mongoose.model('Article');
 var Settings = mongoose.model('Settings');
 var Users = mongoose.model('User');
+var Gallery = mongoose.model('Gallery');
+
+var fs = require('fs');
+var mkdirp = require('mkdirp');
 
 exports.render = function(req, res) {
     res.locals.sections = 'dashboard';
@@ -33,6 +39,7 @@ exports.articlesGetNew = function(req, res) {
 };
 
 exports.articlesPostNew = function(req, res) {
+
     var articleData = {
         title: req.body.title,
         content: req.body.content,
@@ -41,7 +48,8 @@ exports.articlesPostNew = function(req, res) {
         state: req.body.state,
         createdDate: req.body.createdDate,
         metaTitle: req.body.metaTitle,
-        metaDescription: req.body.metaDescription
+        metaDescription: req.body.metaDescription,
+        tags: req.body.tags
     };
 
     var article = new Articles(articleData);
@@ -50,6 +58,102 @@ exports.articlesPostNew = function(req, res) {
         if (err) throw err;
 
         res.redirect('/admin/articles');
+    });
+};
+
+exports.articlesGetEdit = function(req, res) {
+    res.locals.sections = 'all-articles';
+    res.locals.sectionsTree = 'articles';
+
+    var editId = req.params.id;
+
+    Articles
+        .findOne({_id: editId})
+        .populate('author')
+        .exec(function(err, article) {
+            if (err) throw err;
+
+            res.render('articles/edit', {
+                article: article
+            });
+        });
+};
+
+exports.articlesPostEdit = function(req, res) {
+    Articles
+        .update({_id: req.body.id},
+                {$set: {
+                    id: req.body.id,
+                    title: req.body.title,
+                    content: req.body.content,
+                    slug: req.body.slug,
+                    author: req.body.author,
+                    state: req.body.state,
+                    metaTitle: req.body.metaTitle,
+                    metaDescription: req.body.metaDescription,
+                    tags: req.body.tags
+                }},
+                function(err, result) {
+                    if (err) throw err;
+
+                    res.redirect('/admin/articles');
+                });
+};
+
+exports.galleryGet = function(req, res) {
+    Gallery
+        .find({})
+        .exec(function(err, photos) {
+            if (err) throw err;
+
+            res.json(photos);
+        });
+};
+
+exports.galleryPost = function(req, res) {
+
+    var form = new Formidable.IncomingForm();
+
+    form.parse(req, function(err, fields, files) {
+        if (err) throw err;
+
+        console.log('Fields: ', fields);
+        console.log('Files: ', files);
+
+        var photo = files.file || files.image;
+        var dir =  __dirname + '/../../../uploads/';
+        var uniqueName = Date.now() + photo.name;
+        var path = dir + uniqueName;
+
+        mkdirp(dir, function(err) {
+            if (err) throw err;
+
+            var src = fs.createReadStream(photo.path);
+            var dest = fs.createWriteStream(path);
+            
+            src.pipe(dest);
+
+            src.on('end', function() {
+                fs.unlinkSync(photo.path);
+            });
+        });
+        
+
+        // fs.renameSync(photo.path, dir + '/' + photo.name);
+
+        var photoData = {
+            url: '/admin/uploads/' + uniqueName,
+            slug: fields.slug,
+            description: fields.description
+        };
+
+        var image = new Gallery(photoData);
+
+        image.save(function(err, result) {
+            if (err) throw err;
+
+            res.json({location: result.url});
+        });
     });
 };
 

@@ -23,7 +23,10 @@
                     <tbody>
                     {{#each articles}}
                         <tr>
-                          <td>{{title}}</td>
+                          <td>
+                            {{title}}
+                            <a href="/admin/articles/{{id}}" class="btn btn-default fa fa-pencil pull-right edit" data-id="{{id}}"></a>
+                          </td>
                           <td>{{author.displayName}}</td>
                           <td>TODO</td>
                           <td>{{createdDate}}</td>
@@ -51,7 +54,7 @@
 <script src="/admin/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="/admin/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script>
-  $(function () {
+    $(function () {
         $('#articles').DataTable({
             'paging': true,
             'lengthChange': false,
@@ -60,6 +63,17 @@
             'info': true,
             'autoWidth': false
         });
-  });
+    });
+
+    // $(document).ready(function() {
+    //     $('.edit').click(function(e) {
+    //         console.log($(this).attr('data-id'));
+    //         $.ajax({
+    //             url: '/admin/articles/edit/' + $(this).attr('data-id'),
+    //             type: 'get'
+    //             // data: JSON.stringify({id: $(this).attr('data-id')})
+    //         });
+    //     });
+    // });
 </script>
 {{/section}}

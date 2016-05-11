@@ -47,6 +47,7 @@ module.exports = function(app) {
     app.use(session({ secret: process.env.COOKIE_SECRET }));
     app.use(compress());
     app.use('/admin', express.static('admin/public')); //, {maxAge: 43200000}));
+    app.use('/admin/uploads', express.static('uploads')); //, {maxAge: 43200000}));
 
     // Configure passport middleware
     app.use(passport.initialize());

@@ -1,9 +1,13 @@
 {{#section 'head'}}
-<!-- bootstrap wysihtml5 - text editor -->
-<link rel="stylesheet" href="/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 {{/section}}
 
 <div class="row">
+    {{!-- input pluged in TinyMCE, responsible for updating images --}}
+    {{!-- without living the editor --}}
+    <input name="image" type="file" id="filePicker" hidden>
+    {{!-- stores the field inside the iframe --}}
+    <input type="text" id="filePickerField" hidden>
+    
     <form method="post" action="/admin/articles/new">
         <div class="col-md-8">
             <div class="box box-default">
@@ -21,7 +25,7 @@
                     </div>
                     <div class="form-group">
                         <label for="content">{{lang.newArticle.articlesForm.content}}</label>
-                        <textarea class="textarea" id="content" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" name="content"></textarea>
+                        <textarea id="content" name="content"></textarea>
                     </div>
                 </div>
             </div>
@@ -53,9 +57,13 @@
                             <option value="published">{{lang.newArticle.articlesForm.state.published}}</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="tags">{{lang.newArticle.articlesForm.tags}}</label>
+                        <input type="text" class="form-control" id="tags" name="tags">
+                    </div>
                     <div class="box-footer">
                         <a href="/admin/articles" class="btn btn-default">{{lang.newArticle.articlesForm.cancelBtn}}</a>
-                        <button type="submit" class="btn btn-primary pull-right">{{lang.newArticle.articlesForm.postBtn}}</button>
+                        <button type="submit" id="sendBtn" class="btn btn-primary pull-right">{{lang.newArticle.articlesForm.postBtn}}</button>
                     </div><!-- /.box-footer -->
                 
                 </div>
@@ -66,13 +74,51 @@
 
 {{#section 'scripts'}}
 <script src="/admin/js/slug-browser.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<script src="/admin/plugins/bootstrap-wysihtml5/locales/bootstrap-wysihtml5.{{lang.locale}}.js"></script>
+<script src='/admin/plugins/tinymce/tinymce.min.js'></script>
 <script>
-    $(function () {
-        //bootstrap WYSIHTML5 - text editor
-        $(".textarea").wysihtml5({locale: "{{lang.locale}}"});
+    tinymce.init({
+        selector: '#content',
+        statusbar: false, // it doesn't matter the name of the elements I'm in
+        menubar: false, // the same options that are already in the toolbar
+        plugins: 'image imagetools',
+        height: 400,
+        language: '{{lang.locale}}',
+        images_upload_url: '/admin/gallery',
+        file_browser_callback: function(field_name, url, type, win) {
+            if (type === 'image') {
+                $('#filePicker').click();
+                document.getElementById('filePickerField').value = field_name;
+            }
+        }
     });
-</script>
+
+    $(document).ready(function() {
+        $('#sendBtn').click(function(e) {
+            e.preventDefault();
+            tinymce.activeEditor.uploadImages(function(success) {
+                document.forms[0].submit();
+            });
+        });
+
+        $('#filePicker').change(function(e) {
+            console.log('change filepicker');
+            var form = new FormData();
+            form.append('image', document.getElementById('filePicker').files[0]);
+
+            // post
+            $.ajax({
+                url: '/admin/gallery',
+                method: 'post',
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    // get the value from the hidden input and update the real field
+                    document.getElementById(document.getElementById('filePickerField').value).value = data.location;
+                }
+            });
+        });
+
+    });
+  </script>
 {{/section}}

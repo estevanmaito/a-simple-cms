@@ -1,13 +1,13 @@
 {
   "name": "cms",
-  "version": "0.0.1",
-  "description": "A easy to use and develop node.js CMS",
+  "version": "0.0.2",
+  "description": "An easy to use and develop node.js CMS",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Estevan Maito",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.0",
     "compression": "^1.6.1",
@@ -16,6 +16,8 @@
     "dotenv": "^2.0.0",
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
+    "formidable": "^1.0.17",
+    "mkdirp": "^0.5.1",
     "mongoose": "^4.4.14",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
