@@ -1,4 +1,6 @@
 {{#section 'head'}}
+<link rel="stylesheet" href="/admin/plugins/jQuery/jquery-ui.min.css">
+<link rel="stylesheet" href="/admin/plugins/tagit/jquery.tagit.css">
 {{/section}}
 
 <div class="row">
@@ -59,7 +61,8 @@
                     </div>
                     <div class="form-group">
                         <label for="tags">{{lang.newArticle.articlesForm.tags}}</label>
-                        <input type="text" class="form-control" id="tags" name="tags">
+                        <input type="text" class="form-control hidden" id="tags" name="tags" hidden>
+                        <ul id="singleFieldTags"></ul>
                     </div>
                     <div class="box-footer">
                         <a href="/admin/articles" class="btn btn-default">{{lang.newArticle.articlesForm.cancelBtn}}</a>
@@ -75,6 +78,9 @@
 {{#section 'scripts'}}
 <script src="/admin/js/slug-browser.js"></script>
 <script src='/admin/plugins/tinymce/tinymce.min.js'></script>
+<script src='/admin/plugins/jQuery/jquery-ui.min.js'></script>
+<script src='/admin/plugins/tagit/tag-it.min.js'></script>
+
 <script>
     tinymce.init({
         selector: '#content',
@@ -117,6 +123,12 @@
                     document.getElementById(document.getElementById('filePickerField').value).value = data.location;
                 }
             });
+        });
+
+        $('#singleFieldTags').tagit({
+            // This will make Tag-it submit a single form value, as a comma-delimited field.
+            singleField: true,
+            singleFieldNode: $('#tags')
         });
 
     });
