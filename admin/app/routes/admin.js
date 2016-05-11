@@ -3,6 +3,7 @@ var router = express.Router();
 var admin = require('../controllers/admin');
 var fs = require('fs');
 var path = require('path');
+var moment = require('moment');
 
 var mongoose = require('mongoose');
 var Settings = mongoose.model('Settings');
@@ -41,6 +42,8 @@ router.use(function(req, res, next) {
                 if (err) throw err;
 
                 if (settings) {
+                    // setup moment.js locale
+                    moment.locale(settings.lang.replace(/_/, '-'));
                     cb(settings.lang);
                 } else {
                     cb('en_US');
