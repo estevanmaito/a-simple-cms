@@ -19,7 +19,7 @@ var Article = new Schema({
     content: String,
     slug: {type: String, required: true},
     author: {type: Schema.ObjectId, ref : 'User'},
-    state: {type: String, defautl: 'draft', required: true},
+    state: {type: String, default: 'draft', required: true},
     createdDate: {type: Date, default: Date.now, get: getDate},
     metaTitle: String,
     metaDescription: String,

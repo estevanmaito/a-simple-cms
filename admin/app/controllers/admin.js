@@ -14,6 +14,7 @@ DASHBOARD
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
 
 exports.render = function(req, res) {
+    // side menu variables; highlights active menu
     res.locals.sections = 'dashboard';
     res.render('index');
 };
@@ -23,8 +24,7 @@ ARTICLES
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
 
 exports.articlesList = function(req, res) {
-    // side menu variables
-    // highlights active menu
+    // side menu variables; highlights active menu
     res.locals.sections = 'all-articles';
     res.locals.sectionsTree = 'articles';
 
@@ -41,6 +41,7 @@ exports.articlesList = function(req, res) {
 };
 
 exports.articlesGetNew = function(req, res) {
+    // side menu variables; highlights active menu
     res.locals.sections = 'new-article';
     res.locals.sectionsTree = 'articles';
     res.render('articles/new');
@@ -70,6 +71,7 @@ exports.articlesPostNew = function(req, res) {
 };
 
 exports.articlesGetEdit = function(req, res) {
+    // side menu variables; highlights active menu
     res.locals.sections = 'all-articles';
     res.locals.sectionsTree = 'articles';
 
@@ -129,9 +131,6 @@ exports.galleryPost = function(req, res) {
     form.parse(req, function(err, fields, files) {
         if (err) throw err;
 
-        console.log('Fields: ', fields);
-        console.log('Files: ', files);
-
         var photo = files.file || files.image;
         var dir =  __dirname + '/../../../uploads/';
         var uniqueName = Date.now() + photo.name;
@@ -149,9 +148,6 @@ exports.galleryPost = function(req, res) {
                 fs.unlinkSync(photo.path);
             });
         });
-        
-
-        // fs.renameSync(photo.path, dir + '/' + photo.name);
 
         var photoData = {
             url: '/admin/uploads/' + uniqueName,
@@ -174,9 +170,7 @@ USERS
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
 
 exports.usersList = function(req, res) {
-
-    // side menu variables
-    // highlights active menu
+    // side menu variables; highlights active menu
     res.locals.sections = 'all-users';
     res.locals.sectionsTree = 'users';
 
@@ -199,38 +193,28 @@ exports.usersList = function(req, res) {
 };
 
 exports.usersGetNew = function(req, res) {
+    // side menu variables; highlights active menu
     res.locals.sections = 'new-user';
     res.locals.sectionsTree = 'users';
     res.render('users/new');
 };
 
 exports.usersPostNew = function(req, res) {
-    // examine the best way to register a new user
-    // send email?
-    // reset password
-    // change password
 
-    // var userData = {
-    //     title: req.body.title,
-    //     content: req.body.content,
-    //     slug: req.body.slug,
-    //     author: req.body.author,
-    //     state: req.body.state,
-    //     createdDate: req.body.createdDate,
-    //     metaTitle: req.body.metaTitle,
-    //     metaDescription: req.body.metaDescription
-    // };
+    Users
+        .register(new Users({
+            username: req.body.username,
+            isAdmin: !!req.body.admin,
+            displayName: req.body.displayName
+        }), req.body.password, function(err) {
+            if (err) throw err;
 
-    // var user = new Articles(userData);
-
-    // user.save(function(err, result) {
-    //     if (err) throw err;
-
-    //     res.redirect('/admin/users');
-    // });
+            res.redirect('/admin/users')
+        });
 };
 
 exports.usersGetProfile = function(req, res) {
+    // side menu variables; highlights active menu
     res.locals.sections = 'user-profile';
     res.locals.sectionsTree = 'users';
 
@@ -285,6 +269,7 @@ exports.usersPostProfile = function(req, res) {
                     user.setPassword(fields.password, function(err, user) {
                         if (err) throw err;
 
+                        // passport-local-mongoose does not save automatically
                         user.save(function(err) {
                             if (err) throw err;
                         });
@@ -306,6 +291,7 @@ SETTINGS
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
 
 exports.settingsGet = function(req, res) {
+    // side menu variables; highlights active menu
     res.locals.sections = 'settings';
     res.render('settings');
 };

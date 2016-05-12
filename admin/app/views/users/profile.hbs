@@ -24,7 +24,7 @@
                                 <img src="{{currentUser.image}}" width="250" height="250">
                             </div>
                         </label>
-                        <input type="file" class="form-control hidden" " id="image" name="image" hidden>
+                        <input type="file" class="form-control hidden" id="image" name="image" hidden>
                     </div>
                     <div class="form-group">
                         <label for="about">{{lang.userProfile.profileForm.about}}</label>
@@ -52,12 +52,11 @@
                         <label for="password">{{lang.userProfile.profileForm.newPassword}}</label>
                         <input type="password" class="form-control" id="password" name="password">
                     </div>
-                    <div class="box-footer">
-                        <a href="/admin/users" class="btn btn-default">{{lang.userProfile.profileForm.cancelBtn}}</a>
-                        <button type="submit" id="sendBtn" class="btn btn-primary pull-right">{{lang.userProfile.profileForm.saveBtn}}</button>
-                    </div><!-- /.box-footer -->
-                
                 </div>
+                <div class="box-footer">
+                    <a href="/admin/users" class="btn btn-default">{{lang.userProfile.profileForm.cancelBtn}}</a>
+                    <button type="submit" id="sendBtn" class="btn btn-primary pull-right">{{lang.userProfile.profileForm.saveBtn}}</button>
+                </div><!-- /.box-footer -->
             </div>
         </div>
     </form>

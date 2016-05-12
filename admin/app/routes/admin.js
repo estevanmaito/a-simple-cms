@@ -18,22 +18,6 @@ router.use(function(req, res, next) {
 
 router.use(function(req, res, next) {
     res.locals.user = req.user;
-    // res.locals.sideMenu = [
-    //     {label: 'Dashboard',    key: 'dashboard',   href: '/admin',         icon: 'fa-bar-chart'},
-    //     {label: 'Articles',     key: 'articles',    icon: 'fa-newspaper-o',
-    //         subMenu: [
-    //             {label: 'All articles',     key: 'all-articles',    href: '/admin/articles'},
-    //             {label: 'New article',      key: 'new-article',     href: '/admin/articles/new'}
-    //         ]
-    //     },
-    //     {label: 'Users',        key: 'users',       icon: 'fa-users',
-    //         subMenu: [
-    //             {label: 'All users',     key: 'all-users',    href: '/admin/users'},
-    //             {label: 'New user',      key: 'new-user',     href: '/admin/users/new'}
-    //         ]
-    //     },
-    //     {label: 'Settings',    key: 'settings',     href: '/admin/settings',    icon: 'fa-cogs'}
-    // ];
 
     function getLangFile(cb) {
         Settings
@@ -51,13 +35,23 @@ router.use(function(req, res, next) {
             });
     }
 
-    // loads synchronously the i18n data and moves on
+    // loads (on every request) synchronously the i18n data and moves on
     // it doesn't look good for me, but works for now :/
+    // should be loaded in sessions?
     getLangFile(function(data) {
         res.locals.lang = JSON.parse(fs.readFileSync(path.join(__dirname + '/../config/i18n/') + data + '.json'));
         next();
     });
 });
+
+// block content from unauthorized users
+function isAdmin(req, res, next) {
+    if (req.user.isAdmin) {
+        return next();
+    } else {
+        res.render('404');
+    }
+};
 
 router.get('/', admin.render);
 router.get('/articles', admin.articlesList);
@@ -70,12 +64,12 @@ router.get('/gallery', admin.galleryGet);
 router.post('/gallery', admin.galleryPost);
 
 router.get('/users', admin.usersList);
-router.get('/users/new', admin.usersGetNew);
-router.post('/users/new', admin.usersPostNew);
+router.get('/users/new', isAdmin, admin.usersGetNew);
+router.post('/users/new', isAdmin, admin.usersPostNew);
 router.get('/users/profile', admin.usersGetProfile);
 router.post('/users/profile', admin.usersPostProfile);
 
-router.get('/settings', admin.settingsGet);
-router.post('/settings', admin.settingsPost);
+router.get('/settings', isAdmin, admin.settingsGet);
+router.post('/settings', isAdmin, admin.settingsPost);
 
 module.exports = router;

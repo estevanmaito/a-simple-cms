@@ -17,7 +17,7 @@
                           <th>{{lang.allArticles.articlesTable.author}}</th>
                           <th>{{lang.allArticles.articlesTable.tags}}</th>
                           <th>{{lang.allArticles.articlesTable.createdDate}}</th>
-                          <th>{{lang.allArticles.articlesTable.status}}</th>
+                          <th>{{lang.allArticles.articlesTable.state.title}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,9 +28,13 @@
                             <a href="/admin/articles/{{id}}" class="btn btn-default fa fa-pencil pull-right edit" data-id="{{id}}"></a>
                           </td>
                           <td>{{author.displayName}}</td>
-                          <td>TODO</td>
+                          <td>{{tags}}</td>
                           <td>{{createdDate}}</td>
-                          <td>{{state}}</td>
+                          <td>{{#ifeq state "draft"}}
+                            {{../lang.allArticles.articlesTable.state.draft}}
+                          {{else}}
+                            {{../lang.allArticles.articlesTable.state.published}}
+                          {{/ifeq}}</td>
                         </tr>
                     {{/each}}
                     </tbody>
@@ -40,7 +44,7 @@
                           <th>{{lang.allArticles.articlesTable.author}}</th>
                           <th>{{lang.allArticles.articlesTable.tags}}</th>
                           <th>{{lang.allArticles.articlesTable.createdDate}}</th>
-                          <th>{{lang.allArticles.articlesTable.status}}</th>
+                          <th>{{lang.allArticles.articlesTable.state.title}}</th>
                         </tr>
                     </tfoot>
                 </table>

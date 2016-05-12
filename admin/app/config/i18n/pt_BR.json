@@ -31,7 +31,11 @@
             "author": "Autor",
             "tags": "Etiquetas",
             "createdDate": "Criado em",
-            "status": "Estado"
+            "state": {
+                "title": "Estado",
+                "draft": "Rascunho",
+                "published": "Publicado"
+            }
         }
     },
     "newArticle": {
@@ -66,7 +70,12 @@
     "newUser": {
         "pageTitle": "Novo usuário",
             "usersForm": {
-                "name": "Nome"
+                "username": "Usuário",
+                "password": "Senha",
+                "displayName": "Nome público",
+                "admin": "Administrador",
+                "cancelBtn": "Cancelar",
+                "saveBtn": "Salvar"
             }
     },
 
