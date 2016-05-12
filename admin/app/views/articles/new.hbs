@@ -87,8 +87,11 @@
         menubar: false, // the same options that are already in the toolbar
         plugins: 'image imagetools',
         height: 400,
+        {{#ifeq lang.locale "en_US"}}
+        {{else}}
         language: '{{lang.locale}}',
         language_url: '/admin/plugins/tinymce/langs/{{lang.locale}}.js',
+        {{/ifeq}}
         images_upload_url: '/admin/gallery',
         file_browser_callback: function(field_name, url, type, win) {
             if (type === 'image') {

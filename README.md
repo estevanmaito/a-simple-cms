@@ -1,12 +1,42 @@
 #a simple cms
 
-Please, don't use this in production.
+Please, don't use this in production. Yet.
 
 ##TODO
 
-- User registration
-- Better routes handling
-- Separate admin settings from the rest of the project
-- i18n (priority)
-- Remove unused plugins
-- and the list goes on...
+- Comment system
+- Auto generate and update sitemap.xml
+- Auto generate and update robots.txt
+
+#Project structure
+
+```
+cms/
+├── admin/
+│   ├── app/
+|   |   ├── config/
+|   |   |   └── i18n/
+│   |   ├── controllers/
+|   |   ├── models/
+│   |   ├── routes/
+│   |   └── views/
+|   |   |   ├── articles/
+|   │   |   ├── layouts/
+|   |   |   ├── partials/
+|   │   |   ├── settings/
+|   │   |   └── users/
+│   ├── public/
+│   |   ├── components/
+│   |   ├── css/
+│   |   ├── js/
+│   |   └── plugins/
+├── content/
+|   ├── config/
+|   ├── controllers/
+|   ├── models/
+|   ├── routes/
+|   └── views/
+|   │   ├── layouts/
+|   │   └── partials/
+└── uploads/
+```
