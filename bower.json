@@ -1,0 +1,28 @@
+{
+  "name": "cms",
+  "description": "An easy to use and develop node.js CMS",
+  "main": "app.js",
+  "authors": [
+    "Estevan Maito"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "cms",
+    "node",
+    "mongo"
+  ],
+  "homepage": "https://github.com/estevanmaito/a-simple-cms",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "admin/public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AdminLTE": "admin-lte#^2.3.3",
+    "tinymce": "tinymce-dist#^4.3.12",
+    "jquery-ui": "^1.11.4"
+  }
+}

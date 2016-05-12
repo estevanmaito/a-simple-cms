@@ -10,15 +10,18 @@
         },
         {"label": "Users",        "key": "users",       "icon": "fa-users",
             "subMenu": [
-                {"label": "All users",     "key": "all-users",    "href": "/admin/users"},
-                {"label": "New user",      "key": "new-user",     "href": "/admin/users/new"}
+                {"label": "All users",      "key": "all-users",    "href": "/admin/users"},
+                {"label": "New user",       "key": "new-user",     "href": "/admin/users/new"},
+                {"label": "My profile",     "key": "user-profile", "href": "/admin/users/profile"}
             ]
         },
         {"label": "Settings",    "key": "settings",     "href": "/admin/settings",    "icon": "fa-cogs"}
     ],
 
     "dashboard": {
-        "title": "Dashboard"
+        "title": "Dashboard",
+        "comments": "Comments",
+        "visits": "Visits"
     },
 
     "allArticles": {
@@ -27,8 +30,12 @@
             "title": "Title",
             "author": "Author",
             "tags": "Tags",
-            "createdDate": "Created date",
-            "status": "Status"
+            "createdDate": "Created at",
+            "state": {
+                "title": "State",
+                "draft": "Draft",
+                "published": "Published"
+            }
         }
     },
     "newArticle": {
@@ -38,13 +45,14 @@
             "content": "Content",
             "insertImage": "Insert image",
             "properties": "Properties",
-            "slugSnippet": "how the URL will show (ex: example.com/this-is-the-slug)",
+            "slugSnippet": "how the URL will be presented (ex: example.com/this-is-the-slug)",
             "author": "Author",
             "state": {
                 "title": "State",
                 "draft": "Draft",
                 "published": "Published"
             },
+            "tags": "Tags",
             "cancelBtn": "Cancel",
             "postBtn": "Post"
         }
@@ -62,7 +70,27 @@
     "newUser": {
         "pageTitle": "New user",
             "usersForm": {
-                "name": "Name"
+                "username": "Username",
+                "password": "Password",
+                "displayName": "Public name",
+                "admin": "Administrator",
+                "cancelBtn": "Cancel",
+                "saveBtn": "Save"
             }
+    },
+
+    "userProfile": {
+        "pageTitle": "My profile",
+        "profileForm": {
+            "security": "Security",
+            "username": "Username",
+            "newPassword": "New password",
+            "publicInfos": "The following informations will be public and available to visitors",
+            "displayName": "Public name",
+            "image": "Profile image",
+            "about": "About",
+            "cancelBtn": "Cancel",
+            "saveBtn": "Save"
+        }
     }
 }
