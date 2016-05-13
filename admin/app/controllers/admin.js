@@ -7,6 +7,7 @@ var Gallery = mongoose.model('Gallery');
 
 var fs = require('fs');
 var mkdirp = require('mkdirp');
+var path = require('path');
 
 
 /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -107,6 +108,17 @@ exports.articlesPostEdit = function(req, res) {
                     if (err) throw err;
 
                     res.redirect('/admin/articles');
+                });
+};
+
+exports.articlesDelete = function(req, res) {
+    console.log('delete: ', req.body.id);
+    
+    Articles
+        .remove({_id: req.body.id}, function(err, removed) {
+                    if (err) throw err;
+
+                    res.json(removed);
                 });
 };
 
@@ -293,14 +305,37 @@ SETTINGS
 exports.settingsGet = function(req, res) {
     // side menu variables; highlights active menu
     res.locals.sections = 'settings';
-    res.render('settings');
+
+    Settings
+        .findOne({})
+        .exec(function(err, settings) {
+            // get themes from folder
+            var folders = [];
+            fs.readdir(path.join(__dirname + '/../../../content/themes'), function(err, files) {
+                files.forEach(function(item, value) {
+                    var obj = {};
+                    obj.name = item;
+                    folders.push(obj);
+                });
+                
+                res.render('settings', {
+                    themes: folders,
+                    settings: settings
+                });
+            });
+        });
 };
 
 exports.settingsPost = function(req, res) {
     
     // find the unique record for settings
     Settings
-        .findOneAndUpdate({}, {lang: req.body.lang})
+        .findOneAndUpdate({}, {
+            lang: req.body.lang,
+            currentTheme: req.body.currentTheme,
+            siteTitle: req.body.siteTitle,
+            siteDescription: req.body.siteDescription
+        })
         .exec(function(err, result) {
             if (err) throw err;
 

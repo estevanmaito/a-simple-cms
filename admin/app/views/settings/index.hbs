@@ -3,7 +3,7 @@
         <div class="col-md-8">
             <div class="box box-default">
                 <div class="box-header">
-                    <h3 class="box-title">General settings</h3>
+                    <h3 class="box-title">{{lang.settings.pageTitle}}</h3>
                     <!-- tools box -->
                     <div class="pull-right box-tools">
                         <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
@@ -11,7 +11,7 @@
                 </div><!-- /.box-header -->
                 <div class="box-body pad">
                     <div class="form-group">
-                        <label for="lang">Language</label>
+                        <label for="lang">{{lang.settings.language}}</label>
                         <select class="form-control" id="lang" name="lang">
                             <option value="en_US" {{#ifeq lang.locale "en_US"}}
                             selected
@@ -21,9 +21,25 @@
                             {{else}}{{/ifeq}}>pt_BR</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="currentTheme">{{lang.settings.currentTheme}}</label>
+                        <select class="form-control" id="currentTheme" name="currentTheme">
+                        {{#each themes}}
+                            <option value="{{name}}">{{name}}</option>
+                        {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="siteTitle">{{lang.settings.siteTitle}}</label>
+                        <input type="text" class="form-control" id="siteTitle" name="siteTitle">
+                    </div>
+                    <div class="form-group">
+                        <label for="siteDescription">{{lang.settings.siteDescription}}</label>
+                        <input type="text" class="form-control" id="siteDescription" name="siteDescription">
+                    </div>
                     <div class="box-footer">
-                        <a href="/admin/settings" class="btn btn-default">Cancel</a>
-                        <button type="submit" class="btn btn-primary pull-right">Save</button>
+                        <a href="/admin/settings" class="btn btn-default">{{lang.settings.cancelBtn}}</a>
+                        <button type="submit" class="btn btn-primary pull-right">{{lang.settings.saveBtn}}</button>
                     </div><!-- /.box-footer -->
                 </div>
             </div>

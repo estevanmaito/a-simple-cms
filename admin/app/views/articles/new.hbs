@@ -22,11 +22,11 @@
                 <div class="box-body pad">
                     <div class="form-group">
                         <label for="title">{{lang.newArticle.articlesForm.title}}</label>
-                        <input type="text" class="form-control" id="title" name="title">
+                        <input type="text" class="form-control" id="title" name="title" required>
                     </div>
                     <div class="form-group">
                         <label for="content">{{lang.newArticle.articlesForm.content}}</label>
-                        <textarea id="content" name="content"></textarea>
+                        <textarea id="content" name="content" required></textarea>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                 <div class="box-body">
                     <div class="form-group">
                         <label for="slug">Slug </label><small> {{lang.newArticle.articlesForm.slugSnippet}}</small>
-                        <input type="text" class="form-control" id="slug" name="slug">
+                        <input type="text" class="form-control" id="slug" name="slug" required>
                     </div>
                     <div class="form-group">
                         <label for="author">{{lang.newArticle.articlesForm.author}}</label>
@@ -67,6 +67,29 @@
                         <a href="/admin/articles" class="btn btn-default">{{lang.newArticle.articlesForm.cancelBtn}}</a>
                         <button type="submit" id="sendBtn" class="btn btn-primary pull-right">{{lang.newArticle.articlesForm.postBtn}}</button>
                     </div><!-- /.box-footer -->
+                
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="box box-default">
+                <div class="box-header">
+                    <h3 class="box-title">SEO</h3>
+                    <!-- tools box -->
+                    <div class="pull-right box-tools">
+                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                    </div><!-- /. tools -->
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="metaTitle">Meta title</label>
+                        <input type="text" class="form-control" id="metaTitle" name="metaTitle">
+                    </div>
+                    <div class="form-group">
+                        <label for="metaDescription">Meta description</label>
+                        <textarea class="form-control" id="metaDescription" name="metaDescription"></textarea>
+                    </div>
                 
                 </div>
             </div>
@@ -98,6 +121,12 @@
                 $('#filePicker').click();
                 document.getElementById('filePickerField').value = field_name;
             }
+        },
+        setup: function(editor) {
+            editor.on('init', function(e) {
+                // remove a hard coded hint
+                document.querySelector('#content_ifr').title = '';
+            });
         }
     });
 

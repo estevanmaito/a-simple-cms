@@ -69,15 +69,56 @@
                         <ul id="singleFieldTags"></ul>
                     </div>
                     <div class="box-footer">
-                        <a href="/admin/articles" class="btn btn-default">{{lang.newArticle.articlesForm.cancelBtn}}</a>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"><span class="fa fa-trash"></span> {{lang.newArticle.articlesForm.deleteBtn}}</button>
                         <button type="submit" id="sendBtn" class="btn btn-primary pull-right">{{lang.newArticle.articlesForm.postBtn}}</button>
                     </div><!-- /.box-footer -->
                 
                 </div>
             </div>
         </div>
+
+        <div class="col-md-4">
+            <div class="box box-default">
+                <div class="box-header">
+                    <h3 class="box-title">SEO</h3>
+                    <!-- tools box -->
+                    <div class="pull-right box-tools">
+                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                    </div><!-- /. tools -->
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="metaTitle">Meta title</label>
+                        <input type="text" class="form-control" id="metaTitle" name="metaTitle" value="{{article.metaTitle}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="metaDescription">Meta description</label>
+                        <textarea class="form-control" id="metaDescription" name="metaDescription">{{article.metaDescription}}</textarea>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
     </form>
 </div>
+
+<div class="modal modal-danger" id="deleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{lang.newArticle.articlesForm.deleteBtn}}</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{lang.newArticle.articlesForm.deleteConfirmation}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">{{lang.newArticle.articlesForm.cancelBtn}}</button>
+                <button type="button" class="btn btn-outline" id="deleteBtn">{{lang.newArticle.articlesForm.deleteBtn}}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 {{#section 'scripts'}}
 <script src="/admin/js/slug-browser.js"></script>
@@ -90,6 +131,7 @@
         selector: '#content',
         statusbar: false, // it doesn't matter the name of the elements I'm in
         menubar: false, // the same options that are already in the toolbar
+        element_path: false,
         plugins: 'image imagetools',
         height: 400,
         {{#ifeq lang.locale "en_US"}}
@@ -106,6 +148,12 @@
                 // sets the actual field_name to the hidden input
                 document.getElementById('filePickerField').value = field_name;
             }
+        },
+        setup: function(editor) {
+            editor.on('init', function(e) {
+                // remove a hard coded hint
+                document.querySelector('#content_ifr').title = '';
+            });
         }
     });
 
@@ -117,6 +165,17 @@
             tinymce.activeEditor.uploadImages(function(success) {
 
                 document.forms[0].submit();
+            });
+        });
+
+        $('#deleteBtn').click(function(e) {
+            $.ajax({
+                url: '/admin/articles/delete',
+                method: 'post',
+                data: {id: document.getElementById('id').value},
+                success: function() {
+                    window.location.pathname = '/admin/articles';
+                }
             });
         });
 

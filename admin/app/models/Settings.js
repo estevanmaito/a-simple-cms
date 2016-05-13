@@ -2,7 +2,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Settings = new Schema({
-    lang: String
+    lang: String,
+    currentTheme: String,
+    siteTitle: String,
+    siteDescription: String
 });
 
 // ADD

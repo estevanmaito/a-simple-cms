@@ -54,7 +54,9 @@
             },
             "tags": "Tags",
             "cancelBtn": "Cancel",
-            "postBtn": "Post"
+            "deleteBtn": "Delete",
+            "postBtn": "Post",
+            "deleteConfirmation": "Are you sure you want to delete this article?"
         }
     },
 
@@ -92,5 +94,15 @@
             "cancelBtn": "Cancel",
             "saveBtn": "Save"
         }
+    },
+
+    "settings": {
+        "pageTitle": "General settings",
+        "language": "Language",
+        "currentTheme": "Current theme",
+        "siteTitle": "Site title",
+        "siteDescription": "Site description",
+        "cancelBtn": "Cancel",
+        "saveBtn": "Save"
     }
 }

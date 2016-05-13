@@ -1,0 +1,39 @@
+{{#section 'head'}}
+<title>{{settings.siteTitle}} - {{article.metaTitle}}</title>
+<meta name="description" content="{{article.metaDescription}}">
+{{/section}}
+
+{{> navigation}}
+
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="intro-header" style="background-image: url('public/img/post-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>{{article.title}}</h1>
+                    {{#if article.subTitle}}
+                    <h2 class="subheading">{{article.subTitle}}</h2>
+                    {{/if}}
+                    <span class="meta">Posted by <a href="#">{{article.author.displayName}}</a> on {{article.createdDate}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                {{{article.content}}}
+            </div>
+        </div>
+    </div>
+</article>
+
+<hr>
+
+{{> footer}}

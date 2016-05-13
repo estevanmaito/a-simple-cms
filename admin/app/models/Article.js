@@ -11,7 +11,7 @@ var setTags = function(tags) {
 };
 
 var getDate = function(createdDate) {
-    return moment(createdDate).format('L');
+    return moment(createdDate).format('LL');
 };
 
 var Article = new Schema({

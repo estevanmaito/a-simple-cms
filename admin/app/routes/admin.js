@@ -58,6 +58,7 @@ router.get('/articles', admin.articlesList);
 router.get('/articles/new', admin.articlesGetNew);
 router.post('/articles/new', admin.articlesPostNew);
 router.post('/articles/edit', admin.articlesPostEdit);
+router.post('/articles/delete', admin.articlesDelete);
 router.get('/articles/:id', admin.articlesGetEdit);
 
 router.get('/gallery', admin.galleryGet);
