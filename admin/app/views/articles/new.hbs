@@ -9,7 +9,7 @@
     {{!-- stores the field inside the iframe --}}
     <input type="text" id="filePickerField" hidden class="hidden">
 
-    <form method="post" action="/admin/articles/new">
+    <form method="post" action="/admin/articles/new" enctype="multipart/form-data">
         <div class="col-md-8">
             <div class="box box-default">
                 <div class="box-header">
@@ -27,6 +27,10 @@
                     <div class="form-group">
                         <label for="content">{{lang.newArticle.articlesForm.content}}</label>
                         <textarea id="content" name="content" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="image">{{lang.newArticle.articlesForm.insertImage}}</label>
+                        <input type="file" class="form-control" id="image" name="image">
                     </div>
                 </div>
             </div>

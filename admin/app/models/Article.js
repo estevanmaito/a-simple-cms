@@ -17,6 +17,7 @@ var getDate = function(createdDate) {
 var Article = new Schema({
     title: {type: String, required: true},
     content: String,
+    image: String,
     slug: {type: String, required: true},
     author: {type: Schema.ObjectId, ref : 'User'},
     state: {type: String, default: 'draft', required: true},

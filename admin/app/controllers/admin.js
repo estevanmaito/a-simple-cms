@@ -9,6 +9,8 @@ var fs = require('fs');
 var mkdirp = require('mkdirp');
 var path = require('path');
 
+var forms = require('../config/forms');
+
 
 /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 DASHBOARD
@@ -50,24 +52,28 @@ exports.articlesGetNew = function(req, res) {
 
 exports.articlesPostNew = function(req, res) {
 
-    var articleData = {
-        title: req.body.title,
-        content: req.body.content,
-        slug: req.body.slug,
-        author: req.body.author,
-        state: req.body.state,
-        createdDate: req.body.createdDate,
-        metaTitle: req.body.metaTitle,
-        metaDescription: req.body.metaDescription,
-        tags: req.body.tags
-    };
+    forms.parseFormWithImage(req, function(form) {
+        console.log('form: ', form);
+        var articleData = {
+            title: form.fields.title,
+            content: form.fields.content,
+            image: form.imageUrl,
+            slug: form.fields.slug,
+            author: form.fields.author,
+            state: form.fields.state,
+            createdDate: form.fields.createdDate,
+            metaTitle: form.fields.metaTitle,
+            metaDescription: form.fields.metaDescription,
+            tags: form.fields.tags
+        };
 
-    var article = new Articles(articleData);
+        var article = new Articles(articleData);
 
-    article.save(function(err, result) {
-        if (err) throw err;
+        article.save(function(err, result) {
+            if (err) throw err;
 
-        res.redirect('/admin/articles');
+            res.redirect('/admin/articles');
+        });
     });
 };
 
@@ -91,24 +97,30 @@ exports.articlesGetEdit = function(req, res) {
 };
 
 exports.articlesPostEdit = function(req, res) {
-    Articles
-        .update({_id: req.body.id},
-                {$set: {
-                    id: req.body.id,
-                    title: req.body.title,
-                    content: req.body.content,
-                    slug: req.body.slug,
-                    author: req.body.author,
-                    state: req.body.state,
-                    metaTitle: req.body.metaTitle,
-                    metaDescription: req.body.metaDescription,
-                    tags: req.body.tags
-                }},
-                function(err, result) {
+    
+    forms.parseFormWithImage(req, function(form) {
+        Articles
+            .findById({_id: form.fields.id} , function(err, article) {
+                if (err) throw err;
+
+                article.title = form.fields.title;
+                article.content = form.fields.content;
+                if (form.imageUrl) article.image = form.imageUrl;
+                article.slug = form.fields.slug;
+                article.author = form.fields.author;
+                article.state = form.fields.state;
+                article.createdDate = form.fields.createdDate;
+                article.metaTitle = form.fields.metaTitle;
+                article.metaDescription = form.fields.metaDescription;
+                article.tags = form.fields.tags;
+
+                article.save(function(err, result) {
                     if (err) throw err;
 
                     res.redirect('/admin/articles');
                 });
+            });
+    });
 };
 
 exports.articlesDelete = function(req, res) {
