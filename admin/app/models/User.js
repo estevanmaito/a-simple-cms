@@ -1,15 +1,17 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var passportLocalMongoose = require('passport-local-mongoose');
+'use strict';
 
-var User = new Schema({
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const passportLocalMongoose = require('passport-local-mongoose');
+
+let User = new Schema({
     displayName: String,
     isAdmin: {type: Boolean, default: false},
     about: String,
     image: String
 });
 
-var options = {
+const options = {
     interval: 3000,
     limitAttempts: true,
     maxAttempts: 3

@@ -1,14 +1,16 @@
-var express = require('express');
-var router = express.Router();
-var routes = require('../controllers');
+'use strict';
 
-var mongoose = require('mongoose');
-var Settings = mongoose.model('Settings');
+const express = require('express');
+const router = express.Router();
+const routes = require('../controllers');
 
-router.use(function(req, res, next) {
+const mongoose = require('mongoose');
+const Settings = mongoose.model('Settings');
+
+router.use((req, res, next) => {
     Settings
         .findOne({})
-        .exec(function(err, settings) {
+        .exec((err, settings) => {
             if (err) throw err;
 
             res.locals.settings = settings;

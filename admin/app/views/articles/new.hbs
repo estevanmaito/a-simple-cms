@@ -138,7 +138,9 @@
         $('#sendBtn').click(function(e) {
             e.preventDefault();
             tinymce.activeEditor.uploadImages(function(success) {
-                document.forms[0].submit();
+                if ($('form')[0].checkValidity()) {
+                    $('form')[0].submit();
+                }
             });
         });
 

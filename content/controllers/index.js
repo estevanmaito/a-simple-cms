@@ -1,31 +1,33 @@
-var mongoose = require('mongoose');
-var Articles = mongoose.model('Article');
+'use strict';
 
-exports.home = function(req, res) {
+const mongoose = require('mongoose');
+const Articles = mongoose.model('Article');
+
+exports.home = (req, res) => {
     Articles
         .find({})
         .populate('author')
         .where({state: 'published'})
-        .exec(function(err, articles) {
+        .exec((err, articles) => {
             if (err) throw err;
 
             res.render('index', {articles: articles});
         });
 };
 
-exports.about = function(req, res) {
+exports.about = (req, res) => {
     res.render('about');
 };
 
-exports.contact = function(req, res) {
+exports.contact = (req, res) => {
     res.render('contact');
 };
 
-exports.article = function(req, res) {
+exports.article = (req, res) => {
     Articles
         .findOne({slug: req.params.slug})
         .populate('author')
-        .exec(function(err, article) {
+        .exec((err, article) => {
             if (err) throw err;
 
             res.render('post', {article: article});

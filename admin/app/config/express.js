@@ -1,17 +1,19 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var handlebars = require('express-handlebars');
-var compress = require('compression');
-var cookieParser = require('cookie-parser');
-var session = require('cookie-session');
-var path = require('path');
+'use strict';
 
-var mongoose = require('mongoose');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+const express = require('express');
+const bodyParser = require('body-parser');
+const handlebars = require('express-handlebars');
+const compress = require('compression');
+const cookieParser = require('cookie-parser');
+const session = require('cookie-session');
+const path = require('path');
+
+const mongoose = require('mongoose');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 
-module.exports = function(app) {
+module.exports = (app) => {
 
     // handlebars layout settings
     app.engine('hbs', handlebars({
@@ -20,12 +22,12 @@ module.exports = function(app) {
         extname: '.hbs',
         partialsDir: path.join(__dirname, '/../views/partials/'),
         helpers: {
-            section: function(name, options) {
+            section: (name, options) => {
                 if (!this._sections) this._sections = {};
                 this._sections[name] = options.fn(this);
                 return null;
             },
-            ifeq: function(a, b, options) {
+            ifeq: (a, b, options) => {
                 if (a == b) {
                     return options.fn(this);
                 } else {
@@ -54,7 +56,7 @@ module.exports = function(app) {
     app.use(passport.session());
 
     // Configure passport-local to use account model for authentication
-    var User = mongoose.model('User');
+    const User = mongoose.model('User');
 
     // create the admin user the first time 
     // User.register(new User({
@@ -80,13 +82,13 @@ module.exports = function(app) {
     // require('../config/routes.js')(app);
 
     // error handling
-    app.use(function (err, req, res, next) {
+    app.use((err, req, res, next) => {
         var err = new Error('Not Found');
         err.status = 404;
         next(err);
     });
 
-    app.use(function (err, req, res, next) {
+    app.use((err, req, res, next) => {
         res.status(err.status || 500);
         res.render('404', {
             error: err.message

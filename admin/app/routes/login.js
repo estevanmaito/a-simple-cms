@@ -1,7 +1,9 @@
-var express = require('express');
-var router = express.Router();
-var login = require('../controllers/login');
-var passport = require('passport');
+'use strict';
+
+const express = require('express');
+const router = express.Router();
+const login = require('../controllers/login');
+const passport = require('passport');
 
 router.get('/', login.renderLogin);
 

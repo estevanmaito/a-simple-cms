@@ -1,7 +1,9 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+'use strict';
 
-var Settings = new Schema({
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+let Settings = new Schema({
     lang: String,
     currentTheme: String,
     siteTitle: String,

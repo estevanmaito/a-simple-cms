@@ -1,14 +1,16 @@
-var express = require('express');
-var router = express.Router();
-var admin = require('../controllers/admin');
-var fs = require('fs');
-var path = require('path');
-var moment = require('moment');
+'use strict';
 
-var mongoose = require('mongoose');
-var Settings = mongoose.model('Settings');
+const express = require('express');
+const router = express.Router();
+const admin = require('../controllers/admin');
+const fs = require('fs');
+const path = require('path');
+const moment = require('moment');
 
-router.use(function(req, res, next) {
+const mongoose = require('mongoose');
+const Settings = mongoose.model('Settings');
+
+router.use((req, res, next) => {
     if (req.isAuthenticated()) {
         return next();
     } else {
@@ -16,7 +18,7 @@ router.use(function(req, res, next) {
     }
 });
 
-router.use(function(req, res, next) {
+router.use((req, res, next) => {
     res.locals.user = req.user;
 
     function getLangFile(cb) {
@@ -38,7 +40,7 @@ router.use(function(req, res, next) {
     // loads (on every request) synchronously the i18n data and moves on
     // it doesn't look good for me, but works for now :/
     // should be loaded in sessions?
-    getLangFile(function(data) {
+    getLangFile((data) => {
         res.locals.lang = JSON.parse(fs.readFileSync(path.join(__dirname + '/../config/i18n/') + data + '.json'));
         next();
     });

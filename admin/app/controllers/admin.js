@@ -1,22 +1,24 @@
-var Formidable = require('formidable');
-var mongoose = require('mongoose');
-var Articles = mongoose.model('Article');
-var Settings = mongoose.model('Settings');
-var Users = mongoose.model('User');
-var Gallery = mongoose.model('Gallery');
+'use strict';
 
-var fs = require('fs');
-var mkdirp = require('mkdirp');
-var path = require('path');
+const Formidable = require('formidable');
+const mongoose = require('mongoose');
+const Articles = mongoose.model('Article');
+const Settings = mongoose.model('Settings');
+const Users = mongoose.model('User');
+const Gallery = mongoose.model('Gallery');
 
-var forms = require('../config/forms');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
+const path = require('path');
+
+const forms = require('../config/forms');
 
 
 /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 DASHBOARD
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
 
-exports.render = function(req, res) {
+exports.render = (req, res) => {
     // side menu variables; highlights active menu
     res.locals.sections = 'dashboard';
     res.render('index');
@@ -26,7 +28,7 @@ exports.render = function(req, res) {
 ARTICLES
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
 
-exports.articlesList = function(req, res) {
+exports.articlesList = (req, res) => {
     // side menu variables; highlights active menu
     res.locals.sections = 'all-articles';
     res.locals.sectionsTree = 'articles';
@@ -43,18 +45,18 @@ exports.articlesList = function(req, res) {
         });
 };
 
-exports.articlesGetNew = function(req, res) {
+exports.articlesGetNew = (req, res) => {
     // side menu variables; highlights active menu
     res.locals.sections = 'new-article';
     res.locals.sectionsTree = 'articles';
     res.render('articles/new');
 };
 
-exports.articlesPostNew = function(req, res) {
+exports.articlesPostNew = (req, res) => {
 
-    forms.parseFormWithImage(req, function(form) {
+    forms.parseFormWithImage(req, (form) => {
         console.log('form: ', form);
-        var articleData = {
+        let articleData = {
             title: form.fields.title,
             content: form.fields.content,
             image: form.imageUrl,
@@ -67,9 +69,9 @@ exports.articlesPostNew = function(req, res) {
             tags: form.fields.tags
         };
 
-        var article = new Articles(articleData);
+        const article = new Articles(articleData);
 
-        article.save(function(err, result) {
+        article.save((err, result) => {
             if (err) throw err;
 
             res.redirect('/admin/articles');
@@ -77,17 +79,17 @@ exports.articlesPostNew = function(req, res) {
     });
 };
 
-exports.articlesGetEdit = function(req, res) {
+exports.articlesGetEdit = (req, res) => {
     // side menu variables; highlights active menu
     res.locals.sections = 'all-articles';
     res.locals.sectionsTree = 'articles';
 
-    var editId = req.params.id;
+    const editId = req.params.id;
 
     Articles
         .findOne({_id: editId})
         .populate('author')
-        .exec(function(err, article) {
+        .exec((err, article) => {
             if (err) throw err;
 
             res.render('articles/edit', {
@@ -96,11 +98,11 @@ exports.articlesGetEdit = function(req, res) {
         });
 };
 
-exports.articlesPostEdit = function(req, res) {
+exports.articlesPostEdit = (req, res) => {
     
-    forms.parseFormWithImage(req, function(form) {
+    forms.parseFormWithImage(req, (form) => {
         Articles
-            .findById({_id: form.fields.id} , function(err, article) {
+            .findById({_id: form.fields.id} , (err, article) => {
                 if (err) throw err;
 
                 article.title = form.fields.title;
@@ -114,7 +116,7 @@ exports.articlesPostEdit = function(req, res) {
                 article.metaDescription = form.fields.metaDescription;
                 article.tags = form.fields.tags;
 
-                article.save(function(err, result) {
+                article.save((err, result) => {
                     if (err) throw err;
 
                     res.redirect('/admin/articles');
@@ -123,11 +125,11 @@ exports.articlesPostEdit = function(req, res) {
     });
 };
 
-exports.articlesDelete = function(req, res) {
+exports.articlesDelete = (req, res) => {
     console.log('delete: ', req.body.id);
     
     Articles
-        .remove({_id: req.body.id}, function(err, removed) {
+        .remove({_id: req.body.id}, (err, removed) => {
                     if (err) throw err;
 
                     res.json(removed);
@@ -138,50 +140,50 @@ exports.articlesDelete = function(req, res) {
 GALLERY
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
 
-exports.galleryGet = function(req, res) {
+exports.galleryGet = (req, res) => {
     Gallery
         .find({})
-        .exec(function(err, photos) {
+        .exec((err, photos) => {
             if (err) throw err;
 
             res.json(photos);
         });
 };
 
-exports.galleryPost = function(req, res) {
+exports.galleryPost = (req, res) => {
 
-    var form = new Formidable.IncomingForm();
+    const form = new Formidable.IncomingForm();
 
-    form.parse(req, function(err, fields, files) {
+    form.parse(req, (err, fields, files) => {
         if (err) throw err;
 
-        var photo = files.file || files.image;
-        var dir =  __dirname + '/../../../uploads/';
-        var uniqueName = Date.now() + photo.name;
-        var path = dir + uniqueName;
+        const photo = files.file || files.image;
+        const dir =  __dirname + '/../../../uploads/';
+        const uniqueName = Date.now() + photo.name;
+        const path = dir + uniqueName;
 
-        mkdirp(dir, function(err) {
+        mkdirp(dir, (err) => {
             if (err) throw err;
 
-            var src = fs.createReadStream(photo.path);
-            var dest = fs.createWriteStream(path);
+            const src = fs.createReadStream(photo.path);
+            const dest = fs.createWriteStream(path);
             
             src.pipe(dest);
 
-            src.on('end', function() {
+            src.on('end', () => {
                 fs.unlinkSync(photo.path);
             });
         });
 
-        var photoData = {
+        let photoData = {
             url: '/admin/uploads/' + uniqueName,
             slug: fields.slug,
             description: fields.description
         };
 
-        var image = new Gallery(photoData);
+        const image = new Gallery(photoData);
 
-        image.save(function(err, result) {
+        image.save((err, result) => {
             if (err) throw err;
 
             res.json({location: result.url});
@@ -193,12 +195,12 @@ exports.galleryPost = function(req, res) {
 USERS
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
 
-exports.usersList = function(req, res) {
+exports.usersList = (req, res) => {
     // side menu variables; highlights active menu
     res.locals.sections = 'all-users';
     res.locals.sectionsTree = 'users';
 
-    var exclude = {
+    const exclude = {
         _id: false,
         salt: false,
         hash: false,
@@ -207,7 +209,7 @@ exports.usersList = function(req, res) {
 
     Users
         .find({}, exclude)
-        .exec(function(err, users) {
+        .exec((err, users) => {
             if (err) throw err;
 
             res.render('users/all', {
@@ -216,35 +218,35 @@ exports.usersList = function(req, res) {
         });
 };
 
-exports.usersGetNew = function(req, res) {
+exports.usersGetNew = (req, res) => {
     // side menu variables; highlights active menu
     res.locals.sections = 'new-user';
     res.locals.sectionsTree = 'users';
     res.render('users/new');
 };
 
-exports.usersPostNew = function(req, res) {
+exports.usersPostNew = (req, res) => {
 
     Users
         .register(new Users({
             username: req.body.username,
             isAdmin: !!req.body.admin,
             displayName: req.body.displayName
-        }), req.body.password, function(err) {
+        }), req.body.password, (err) => {
             if (err) throw err;
 
             res.redirect('/admin/users')
         });
 };
 
-exports.usersGetProfile = function(req, res) {
+exports.usersGetProfile = (req, res) => {
     // side menu variables; highlights active menu
     res.locals.sections = 'user-profile';
     res.locals.sectionsTree = 'users';
 
     Users
         .findOne({_id: req.user.id})
-        .exec(function(err, user) {
+        .exec((err, user) => {
 
             res.render('users/profile', {
                 currentUser: user
@@ -252,32 +254,32 @@ exports.usersGetProfile = function(req, res) {
         });
 };
 
-exports.usersPostProfile = function(req, res) {
+exports.usersPostProfile = (req, res) => {
 
     Users
-        .findByUsername(req.user.username, function(err, user) {
+        .findByUsername(req.user.username, (err, user) => {
             if (err) throw err;
 
-            var form = new Formidable.IncomingForm();
+            const form = new Formidable.IncomingForm();
 
-            form.parse(req, function(err, fields, files) {
+            form.parse(req, (err, fields, files) => {
                 if (err) throw err;
 
                 if (files.image.size) {
-                    var photo = files.file || files.image;
-                    var dir =  __dirname + '/../../../uploads/';
-                    var uniqueName = Date.now() + photo.name;
-                    var path = dir + uniqueName;
+                    const photo = files.file || files.image;
+                    const dir =  __dirname + '/../../../uploads/';
+                    const uniqueName = Date.now() + photo.name;
+                    const path = dir + uniqueName;
 
-                    mkdirp(dir, function(err) {
+                    mkdirp(dir, (err) => {
                         if (err) throw err;
 
-                        var src = fs.createReadStream(photo.path);
-                        var dest = fs.createWriteStream(path);
+                        const src = fs.createReadStream(photo.path);
+                        const dest = fs.createWriteStream(path);
                         
                         src.pipe(dest);
 
-                        src.on('end', function() {
+                        src.on('end', () => {
                             fs.unlinkSync(photo.path);
                         });
                     });
@@ -290,17 +292,17 @@ exports.usersPostProfile = function(req, res) {
 
                 // user changed password
                 if (fields.password) {
-                    user.setPassword(fields.password, function(err, user) {
+                    user.setPassword(fields.password, (err, user) => {
                         if (err) throw err;
 
                         // passport-local-mongoose does not save automatically
-                        user.save(function(err) {
+                        user.save((err) => {
                             if (err) throw err;
                         });
                     });
                 }
 
-                user.save(function(err) {
+                user.save((err) => {
                     if (err) throw err;
 
                     res.redirect('/admin/users');
@@ -314,18 +316,18 @@ exports.usersPostProfile = function(req, res) {
 SETTINGS
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
 
-exports.settingsGet = function(req, res) {
+exports.settingsGet = (req, res) => {
     // side menu variables; highlights active menu
     res.locals.sections = 'settings';
 
     Settings
         .findOne({})
-        .exec(function(err, settings) {
+        .exec((err, settings) => {
             // get themes from folder
-            var folders = [];
-            fs.readdir(path.join(__dirname + '/../../../content/themes'), function(err, files) {
-                files.forEach(function(item, value) {
-                    var obj = {};
+            let folders = [];
+            fs.readdir(path.join(__dirname + '/../../../content/themes'), (err, files) => {
+                files.forEach((item, value) => {
+                    let obj = {};
                     obj.name = item;
                     folders.push(obj);
                 });
@@ -338,7 +340,7 @@ exports.settingsGet = function(req, res) {
         });
 };
 
-exports.settingsPost = function(req, res) {
+exports.settingsPost = (req, res) => {
     
     // find the unique record for settings
     Settings
@@ -348,16 +350,16 @@ exports.settingsPost = function(req, res) {
             siteTitle: req.body.siteTitle,
             siteDescription: req.body.siteDescription
         })
-        .exec(function(err, result) {
+        .exec((err, result) => {
             if (err) throw err;
 
             // no result - first save
             if (!result) {
                 // create new record
-                var settings = new Settings({lang: req.body.lang});
+                const settings = new Settings({lang: req.body.lang});
 
                 // save it
-                settings.save(function(err, result) {
+                settings.save((err, result) => {
                     if (err) throw err;
                 });
             }

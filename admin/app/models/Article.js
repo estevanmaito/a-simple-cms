@@ -1,20 +1,22 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var moment = require('moment');
+'use strict';
 
-var getTags = function(tags) {
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const moment = require('moment');
+
+let getTags = function(tags) {
     return tags.join(',');
 };
 
-var setTags = function(tags) {
+let setTags = function(tags) {
     return tags.split(',');
 };
 
-var getDate = function(createdDate) {
+let getDate = function(createdDate) {
     return moment(createdDate).format('LL');
 };
 
-var Article = new Schema({
+let Article = new Schema({
     title: {type: String, required: true},
     content: String,
     image: String,

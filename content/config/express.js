@@ -1,17 +1,19 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var handlebars = require('express-handlebars');
-var compress = require('compression');
-var cookieParser = require('cookie-parser');
-var session = require('cookie-session');
-var path = require('path');
+'use strict';
 
-var mongoose = require('mongoose');
-var Settings = mongoose.model('Settings');
+const express = require('express');
+const bodyParser = require('body-parser');
+const handlebars = require('express-handlebars');
+const compress = require('compression');
+const cookieParser = require('cookie-parser');
+const session = require('cookie-session');
+const path = require('path');
 
-module.exports = function(publicApp) {
+const mongoose = require('mongoose');
+const Settings = mongoose.model('Settings');
 
-    var currentTheme;
+module.exports = (publicApp) => {
+
+    let currentTheme;
 
 
     // reads the current theme
@@ -30,19 +32,19 @@ module.exports = function(publicApp) {
                 extname: '.hbs',
                 partialsDir: path.join(__dirname, '/../themes/' + currentTheme + '/partials/'),
                 helpers: {
-                    section: function(name, options) {
+                    section: (name, options) => {
                         if (!this._sections) this._sections = {};
                         this._sections[name] = options.fn(this);
                         return null;
                     },
-                    ifeq: function(a, b, options) {
+                    ifeq: (a, b, options) => {
                         if (a == b) {
                             return options.fn(this);
                         } else {
                             return options.inverse(this);
                         }
                     },
-                    shorten: function(str) {
+                    shorten: (str) => {
                         if (str.length > 150) {
                             return str.substring(0, 150) + '...';
                         }
@@ -70,13 +72,13 @@ module.exports = function(publicApp) {
             // require('../config/routes.js')(publicApp);
 
             // error handling
-            publicApp.use(function (req, res, next) {
+            publicApp.use((req, res, next) => {
                 var err = new Error('Not Found');
                 err.status = 404;
                 next(err);
             });
 
-            publicApp.use(function (err, req, res, next) {
+            publicApp.use((err, req, res, next) => {
                 res.status(err.status || 500);
                 res.render('404', {
                     error: err.message
