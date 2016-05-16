@@ -32,19 +32,19 @@ module.exports = (publicApp) => {
                 extname: '.hbs',
                 partialsDir: path.join(__dirname, '/../themes/' + currentTheme + '/partials/'),
                 helpers: {
-                    section: (name, options) => {
+                    section: function(name, options) {
                         if (!this._sections) this._sections = {};
                         this._sections[name] = options.fn(this);
                         return null;
                     },
-                    ifeq: (a, b, options) => {
+                    ifeq: function(a, b, options) {
                         if (a == b) {
                             return options.fn(this);
                         } else {
                             return options.inverse(this);
                         }
                     },
-                    shorten: (str) => {
+                    shorten: function(str) {
                         if (str.length > 150) {
                             return str.substring(0, 150) + '...';
                         }

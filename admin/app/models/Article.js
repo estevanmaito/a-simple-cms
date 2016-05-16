@@ -4,17 +4,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const moment = require('moment');
 
-let getTags = function(tags) {
-    return tags.join(',');
-};
+let getTags = (tags) => tags.join(',');
 
-let setTags = function(tags) {
-    return tags.split(',');
-};
+let setTags = (tags) => tags.split(',');
 
-let getDate = function(createdDate) {
-    return moment(createdDate).format('LL');
-};
+let getDate = (createdDate) => moment(createdDate).format('LL');
 
 let Article = new Schema({
     title: {type: String, required: true},

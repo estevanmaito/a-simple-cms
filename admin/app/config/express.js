@@ -22,12 +22,12 @@ module.exports = (app) => {
         extname: '.hbs',
         partialsDir: path.join(__dirname, '/../views/partials/'),
         helpers: {
-            section: (name, options) => {
+            section: function(name, options) {
                 if (!this._sections) this._sections = {};
                 this._sections[name] = options.fn(this);
                 return null;
             },
-            ifeq: (a, b, options) => {
+            ifeq: function(a, b, options) {
                 if (a == b) {
                     return options.fn(this);
                 } else {
